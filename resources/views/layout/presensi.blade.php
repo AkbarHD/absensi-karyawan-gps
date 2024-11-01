@@ -28,7 +28,8 @@
     </div>
     <!-- * loader -->
 
-
+    {{-- header --}}
+    @yield('header')
 
     <!-- App Capsule -->
     <div id="appCapsule">

@@ -38,11 +38,20 @@
                 <h4>Silahkan Login</h4>
             </div>
             <div class="section mt-1 mb-5">
+                @php
+                    $messaging = Session::get('warning');
+                @endphp
+                @if (Session::get('warning'))
+                    <div class="alert alert-outline-warning">
+                        {{ $messaging }}
+                    </div>
+                @endif
                 <form action="{{ route('proseslogin') }}" method="POST">
                     @csrf
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK">
+                            <input type="text" class="form-control" name="nik" id="nik"
+                                placeholder="Masukan NIK ">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
@@ -52,7 +61,7 @@
                     <div class="form-group boxed">
                         <div class="input-wrapper">
                             <input type="password" class="form-control" name="password" id="password"
-                                placeholder="Password">
+                                placeholder="Masukan password">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
