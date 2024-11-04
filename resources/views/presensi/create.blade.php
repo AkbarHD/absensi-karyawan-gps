@@ -38,10 +38,15 @@
     </div>
     <div class="row">
         <div class="col">
-            <button id="takeabsen" class="btn btn-primary btn-block"> <ion-icon name="camera-outline"></ion-icon>
-                Absen
-                Masuk</button>
+            @if ($cek > 0)
+                <button id="takeabsen" class="btn btn-danger btn-block"> <ion-icon name="camera-outline"></ion-icon>
+                    Absen Pulang</button>
+            @else
+                <button id="takeabsen" class="btn btn-primary btn-block"> <ion-icon name="camera-outline"></ion-icon>
+                    Absen Masuk</button>
+            @endif
         </div>
+
     </div>
 
     <div class="row mt-2">
@@ -49,10 +54,23 @@
             <div id="map"></div>
         </div>
     </div>
+    <audio id="notifikasi_in">
+        <source src="{{ asset('assets/sound/notifikasi_in.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="notifikasi_out">
+        <source src="{{ asset('assets/sound/notifikasi_out.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="radius_sound">
+        <source src="{{ asset('assets/sound/luar_radius.mp3') }}" type="audio/mpeg">
+    </audio>
 @endsection
 
 @push('myscript')
     <script>
+        // ambil notifikasi
+        var notifikasi_in = document.getElementById('notifikasi_in');
+        var notifikasi_out = document.getElementById('notifikasi_out');
+        var radius_sound = document.getElementById('radius_sound');
         Webcam.set({
             height: 480,
             width: 640,
@@ -72,30 +90,31 @@
             // taroh di input lokasi
             lokasi.value = position.coords.latitude + ',' + position.coords.longitude;
             // menampilkan map berdasarkan lokasi kita
-            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 15);
+            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 18);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
+                maxZoom: 20,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             // marker
             var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
-            // radius
-            var circle = L.circle([position.coords.latitude, position.coords.longitude], {
+            // radius kantor (tidak boleh di luar radius ini)
+            var circle = L.circle([-6.346559632013218, 106.63407516535953], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
-                radius: 100
+                // batas radius tidak boleh dari 2 meter dari lingkaran (kantor)
+                radius: 20
             }).addTo(map);
         }
 
         function errorCallback() {
 
         }
-
         $('#takeabsen').on('click', function() {
             Webcam.snap(function(url) {
                 image = url;
             })
+            // ambil lokasi kita dari input
             var lokasi = $('#lokasi').val();
             $.ajax({
                 url: "{{ route('presensi.store') }}",
@@ -107,7 +126,31 @@
                 },
                 cache: false,
                 success: function(respond) {
-
+                    var status = respond.split("|");
+                    if (status[0] == "success") {
+                        // jika statusnya in maka play notifikasi
+                        if (status[2] == 'in') {
+                            notifikasi_in.play();
+                        } else {
+                            notifikasi_out.play();
+                        }
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: status[1],
+                            icon: 'success',
+                        })
+                        setTimeout("location.href = '{{ route('dashboard') }}';", 4000);
+                        // setTimeout("location.href = '/dashboard';", 1000);
+                    } else {
+                        if (status[2] == 'radius') {
+                            radius_sound.play();
+                        }
+                        Swal.fire({
+                            title: 'Error!',
+                            text: status[1],
+                            icon: 'error',
+                        })
+                    }
                 }
             });
         });
