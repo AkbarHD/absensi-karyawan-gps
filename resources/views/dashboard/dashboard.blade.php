@@ -69,11 +69,18 @@
                         <div class="card-body">
                             <div class="presencecontent">
                                 <div class="iconpresence">
-                                    <ion-icon name="camera"></ion-icon>
+                                    @if ($absenHariini != null)
+                                        @php
+                                            $path = Storage::url('uploads/absensi/' . $absenHariini->foto_in);
+                                        @endphp
+                                        <img src="{{ url($path) }}" alt="" class="imaged w64">
+                                    @else
+                                        <ion-icon name="camera"></ion-icon>
+                                    @endif
                                 </div>
                                 <div class="presencedetail">
                                     <h4 class="presencetitle">Masuk</h4>
-                                    <span>07:00</span>
+                                    <span>{{ $absenHariini != null ? $absenHariini->jam_in : 'Belum absen' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -84,11 +91,18 @@
                         <div class="card-body">
                             <div class="presencecontent">
                                 <div class="iconpresence">
-                                    <ion-icon name="camera"></ion-icon>
+                                    @if ($absenHariini != null && $absenHariini->foto_out != null)
+                                        @php
+                                            $path = Storage::url('uploads/absensi/' . $absenHariini->foto_out);
+                                        @endphp
+                                        <img src="{{ url($path) }}" alt="" class="imaged w64">
+                                    @else
+                                        <ion-icon name="camera"></ion-icon>
+                                    @endif
                                 </div>
                                 <div class="presencedetail">
                                     <h4 class="presencetitle">Pulang</h4>
-                                    <span>16:00</span>
+                                    <span>{{ $absenHariini != null && $absenHariini->jam_out != null ? $absenHariini->jam_out : 'Belum absen' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +111,7 @@
             </div>
         </div>
 
-        <div class="rekappresence">
+        {{-- <div class="rekappresence">
             <div id="chartdiv"></div>
             <!-- <div class="row">
                                                                                                     <div class="col-6">
@@ -163,7 +177,7 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div> -->
-        </div>
+        </div> --}}
         <div class="presencetab mt-2">
             <div class="tab-pane fade show active" id="pilled" role="tabpanel">
                 <ul class="nav nav-tabs style1" role="tablist">
@@ -182,118 +196,39 @@
             <div class="tab-content mt-2" style="margin-bottom:100px;">
                 <div class="tab-pane fade show active" id="home" role="tabpanel">
                     <ul class="listview image-listview">
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-primary">
-                                    <ion-icon name="image-outline" role="img" class="md hydrated"
-                                        aria-label="image outline"></ion-icon>
+                        @forelse ($historibulanini as $data)
+                            @php
+                                $path = Storage::url('uploads/absensi/' . $data->foto_in);
+                            @endphp
+                            <li>
+                                <div class="item">
+                                    <div class="icon-box bg-primary">
+                                        {{-- <ion-icon name="image-outline" role="img" class="md hydrated"
+                                            aria-label="image outline"></ion-icon> --}}
+                                        <img src="{{ url($path) }}" alt="" class="imaged w64">
+                                    </div>
+                                    <div class="in">
+                                        <div style="transform: translateX(20px); font-size: 14px">
+                                            {{ date('d-m-Y', strtotime($data->tgl_presensi)) }}</div>
+                                        <span class="badge badge-success">{{ $data->jam_in }}</span>
+                                        <span class="badge badge-danger">{{ $data->jam_out ?? 'belum absen' }}</span>
+                                    </div>
                                 </div>
-                                <div class="in">
-                                    <div>Photos</div>
-                                    <span class="badge badge-danger">10</span>
+                            </li>
+                        @empty
+                            <li>
+                                <div class="item">
+                                    <div class="icon-box bg-primary">
+                                        <ion-icon name="image-outline" role="img" class="md hydrated"
+                                            aria-label="image outline"></ion-icon>
+                                    </div>
+                                    <div class="in">
+                                        <div>Tidak ada absen</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-secondary">
-                                    <ion-icon name="videocam-outline" role="img" class="md hydrated"
-                                        aria-label="videocam outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Videos</div>
-                                    <span class="text-muted">None</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="musical-notes-outline" role="img" class="md hydrated"
-                                        aria-label="musical notes outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>Music</div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforelse
+
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel">

@@ -98,12 +98,12 @@
             // marker
             var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
             // radius kantor (tidak boleh di luar radius ini)
-            var circle = L.circle([-6.346559632013218, 106.63407516535953], {
+            var circle = L.circle([-6.353523, 106.63184], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 // batas radius tidak boleh dari 2 meter dari lingkaran (kantor)
-                radius: 20
+                radius: 30
             }).addTo(map);
         }
 

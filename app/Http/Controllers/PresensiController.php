@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PresensiController extends Controller
@@ -24,8 +24,8 @@ class PresensiController extends Controller
         $tgl_presensi = date('Y-m-d');
         $jam_in = date('H:i:s');
         // validasi radius
-        $latitudekantor = -6.353464;
-        $longitudekantor = 106.631653;
+        $latitudekantor = -6.353523;
+        $longitudekantor = 106.63184;
         // ambil dari ajax
         $lokasi = $request->lokasi;
         // dd($lokasi);
@@ -36,11 +36,18 @@ class PresensiController extends Controller
         $radius = round($jarak['meters']);
         // dd($radius);
         // dd($lokasi);
+        // fungsi agar foto tidak ke replace
+        $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
+        if ($cek > 0) {
+            $ket = 'in';
+        } else {
+            $ket = 'out';
+        }
         $image = $request->image;
         // posisi folder
         $folderPath = "public/uploads/absensi/";
         // nama file gambar foto absensi
-        $formatName = $nik . "-" . $tgl_presensi;
+        $formatName = $nik . "-" . $tgl_presensi . '-' . $ket;
         // di explode
         $image_parts = explode(";base64,", $image);
         // di decode
@@ -50,8 +57,7 @@ class PresensiController extends Controller
         // letak folder dan nama file
         $file = $folderPath . $fileName;
         // cek user sudah absen atau belum
-        $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
-        if ($radius > 20) {
+        if ($radius > 30) {
             echo "error|Maaf anda berada diluar radius, Jarak anda " . $radius . " meter dari kantor|radius";
         } else {
             if ($cek > 0) {
