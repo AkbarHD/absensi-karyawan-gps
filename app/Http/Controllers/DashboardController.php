@@ -11,15 +11,33 @@ class DashboardController extends Controller
     public function index()
     {
         $nik = Auth::guard('karyawan')->user()->nik;
-        $bulanini = date('m');
+        // jadi integer bukan string lagi
+        $bulanini = date('m') * 1;
+        // dd($bulanini);
         $tahunini = date('Y');
         $hariini = date('Y-m-d');
+        // hanya menampilkan absen hari ini
         $absenHariini = DB::table('presensi')->where('nik', $nik)->where('tgl_presensi', $hariini)->first();
-        $historibulanini = DB::table('presensi')->whereMonth('tgl_presensi', $bulanini)->whereYear('tgl_presensi', $tahunini)->orderBy('tgl_presensi', 'desc')->get();
+        // hanya menampilkan absen bulan ini
+        $historibulanini = DB::table('presensi')->where('nik', $nik)->whereMonth('tgl_presensi', $bulanini)->whereYear('tgl_presensi', $tahunini)->orderBy('tgl_presensi', 'desc')->get();
         // $historibulanini = DB::table('presensi')
         //     ->whereRaw('MONTH(tgl_presensi)="' . $bulanini . '"')
         //     ->whereRaw('YEAR(tgl_presensi)="' . $tahunini . '"')
         //     ->orderBy('tgl_presensi', 'desc')->get();
-        return view('dashboard.dashboard', compact('absenHariini', 'historibulanini'));
+        // menampilkan angka rekap presensi
+        $rekappresensi = DB::table('presensi')
+            // jumlah hadir, jumlah terlambat
+            ->selectRaw('COUNT(nik) as jmlhadir, SUM(IF(jam_in > "07:00", 1, 0)) as jmlterlambat')
+            ->where('nik', $nik)
+            ->whereMonth('tgl_presensi', $bulanini)->whereYear('tgl_presensi', $tahunini)
+            ->first();
+        // dd($rekappresensi);
+        $leaderboard = DB::table('presensi')->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
+            ->select('karyawan.*', 'presensi.*')
+            ->orderBy('jam_in')
+            ->where('tgl_presensi', $hariini)->get();
+        $namabulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "Sepetember", "Oktober", "November", "Desember"];
+        // dd($namabulan[$bulanini]);
+        return view('dashboard.dashboard', compact('absenHariini', 'historibulanini', 'namabulan', 'tahunini', 'bulanini', 'rekappresensi', 'leaderboard'));
     }
 }

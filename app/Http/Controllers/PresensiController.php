@@ -57,7 +57,7 @@ class PresensiController extends Controller
         // letak folder dan nama file
         $file = $folderPath . $fileName;
         // cek user sudah absen atau belum
-        if ($radius > 30) {
+        if ($radius > 50) {
             echo "error|Maaf anda berada diluar radius, Jarak anda " . $radius . " meter dari kantor|radius";
         } else {
             if ($cek > 0) {

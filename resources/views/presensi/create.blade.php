@@ -103,7 +103,7 @@
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 // batas radius tidak boleh dari 2 meter dari lingkaran (kantor)
-                radius: 30
+                radius: 50
             }).addTo(map);
         }
 
