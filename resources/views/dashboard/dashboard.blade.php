@@ -3,8 +3,14 @@
     <div class="section" id="user-section">
         <div id="user-detail">
             <div class="avatar">
-                <img src="{{ asset('assets/img/sample/avatar/user-female.png') }}" alt="avatar" style="width: 70px;"
-                    class="imaged  rounded">
+
+                @if (Auth::guard('karyawan')->user()->foto == null)
+                    <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" style="width: 70px; height: 60px;"
+                        class="imaged">
+                @else
+                    <img src="{{ Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) ?? 'assets/img/sample/avatar/avatar1.jpg' }}"
+                        alt="avatar" style="width: 70px; height: 60px;" class="imaged ">
+                @endif
             </div>
             <div id="user-info">
                 <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h2>

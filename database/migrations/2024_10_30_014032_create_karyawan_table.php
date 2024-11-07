@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('jabatan', 20);              // Menggunakan 'string' alih-alih 'varchar'
             $table->string('no_hp', 14);                // Menggunakan 'string' alih-alih 'varchar'
             $table->string('password', 255);            // Menggunakan 'string' alih-alih 'password'
+            $table->string('foto', 30);            // Menggunakan 'string' alih-alih 'password'
             $table->string('remember_token', 255)->nullable(); // Kolom nullable
         });
     }

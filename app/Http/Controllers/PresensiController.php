@@ -124,26 +124,41 @@ class PresensiController extends Controller
         $nik = Auth::guard('karyawan')->user()->nik;
         $nama_lengkap = $request->nama_lengkap;
         $no_hp = $request->no_hp;
-        $password = Hash::make($request->password);
+        $password = $request->password; // Ambil input password dari request
+        $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
 
+        // jika click tombol ganti foto
+        if ($request->hasFile('foto')) {
+            $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
+        } else {
+            $foto = $karyawan->foto;
+        }
+
+        // Periksa apakah password diisi
         if (!empty($password)) {
             $data = [
                 'nama_lengkap' => $nama_lengkap,
                 'no_hp' => $no_hp,
-                'password' => $password
+                'password' => Hash::make($password), // Hash password hanya jika diisi
+                'foto' => $foto
             ];
         } else {
             $data = [
                 'nama_lengkap' => $nama_lengkap,
-                'no_hp' => $no_hp
+                'no_hp' => $no_hp,
+                'foto' => $foto
             ];
         }
 
         $update = DB::table('karyawan')->where('nik', $nik)->update($data);
         if ($update) {
-            return redirect()->back()->with('success', 'Data Behasil di update');
+            if ($request->hasFile('foto')) {
+                $request->file('foto')->storeAs('public/uploads/karyawan/', $foto);
+            }
+            return redirect()->back()->with('success', 'Data berhasil diupdate');
         } else {
-            return redirect()->back()->with('error', 'Data gagal di update');
+            return redirect()->back()->with('error', 'Data gagal diupdate');
         }
     }
+
 }
