@@ -32,4 +32,6 @@ Route::middleware(['auth:karyawan'])->group(function () {
 
     Route::get('/presensi/create', [PresensiController::class, 'create'])->name('presensi.create');
     Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
+    Route::get('/presensi/editprofile', [PresensiController::class, 'editprofile'])->name('presensi.editprofile');
+    Route::post('/presensi/{nik}/update', [PresensiController::class, 'updateprofile'])->name('presensi.updateprofile');
 });
