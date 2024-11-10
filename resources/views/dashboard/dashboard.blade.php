@@ -8,8 +8,8 @@
                     <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" style="width: 70px; height: 60px;"
                         class="imaged">
                 @else
-                    <img src="{{ Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) ?? 'assets/img/sample/avatar/avatar1.jpg' }}"
-                        alt="avatar" style="width: 70px; height: 60px;" class="imaged ">
+                    <img src="{{ Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) }}" alt="avatar"
+                        style="width: 70px; height: 60px;" class="imaged ">
                 @endif
             </div>
             <div id="user-info">

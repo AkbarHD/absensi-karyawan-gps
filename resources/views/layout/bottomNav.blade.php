@@ -5,7 +5,7 @@
             <strong>Home</strong>
         </div>
     </a>
-    <a href="#" class="item">
+    <a href="{{ route('presensi.histori') }}" class="item">
         <div class="col">
             <ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline">
             </ion-icon>
@@ -19,7 +19,7 @@
             </div>
         </div>
     </a>
-    <a href="#" class="item">
+    <a href="{{ route('presensi.izin') }}" class="item">
         <div class="col">
             <ion-icon name="document-text-outline" role="img" class="md hydrated"
                 aria-label="document text outline"></ion-icon>

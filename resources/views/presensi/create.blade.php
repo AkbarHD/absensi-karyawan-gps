@@ -32,7 +32,7 @@
 @section('content')
     <div class="row">
         <div class="col">
-            <input type="hidden" id="lokasi">
+            <input type="text" id="lokasi" style="margin-top: 100px;">
             <div class="webcam-capture"></div>
         </div>
     </div>
@@ -90,20 +90,20 @@
             // taroh di input lokasi
             lokasi.value = position.coords.latitude + ',' + position.coords.longitude;
             // menampilkan map berdasarkan lokasi kita
-            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 18);
+            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 17);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 20,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             // marker
-            var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
+            var marker = L.marker([-6.3908, 106.7243]).addTo(map);
             // radius kantor (tidak boleh di luar radius ini)
-            var circle = L.circle([-6.353523, 106.63184], {
+            var circle = L.circle([-6.3908, 106.7243], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 // batas radius tidak boleh dari 2 meter dari lingkaran (kantor)
-                radius: 50
+                radius: 79
             }).addTo(map);
         }
 

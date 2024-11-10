@@ -25,8 +25,8 @@ class PresensiController extends Controller
         $tgl_presensi = date('Y-m-d');
         $jam_in = date('H:i:s');
         // validasi radius
-        $latitudekantor = -6.353523;
-        $longitudekantor = 106.63184;
+        $latitudekantor = -6.3908;
+        $longitudekantor = 106.7243;
         // ambil dari ajax
         $lokasi = $request->lokasi;
         // dd($lokasi);
@@ -40,9 +40,9 @@ class PresensiController extends Controller
         // fungsi agar foto tidak ke replace
         $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
         if ($cek > 0) {
-            $ket = 'in';
-        } else {
             $ket = 'out';
+        } else {
+            $ket = 'in';
         }
         $image = $request->image;
         // posisi folder
@@ -58,7 +58,7 @@ class PresensiController extends Controller
         // letak folder dan nama file
         $file = $folderPath . $fileName;
         // cek user sudah absen atau belum
-        if ($radius > 50) {
+        if ($radius > 60) {
             echo "error|Maaf anda berada diluar radius, Jarak anda " . $radius . " meter dari kantor|radius";
         } else {
             if ($cek > 0) {
@@ -158,6 +158,56 @@ class PresensiController extends Controller
             return redirect()->back()->with('success', 'Data berhasil diupdate');
         } else {
             return redirect()->back()->with('error', 'Data gagal diupdate');
+        }
+    }
+
+    public function histori()
+    {
+        $namabulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "Sepetember", "Oktober", "November", "Desember"];
+        return view('presensi.histori', compact('namabulan'));
+    }
+
+    public function gethistori(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+        // apa yang di hasilkan di sini akan di tangkap oleh respond success
+        // echo $bulan . ' ' . $tahun;
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $histori = DB::table('presensi')->where('nik', $nik)
+            ->whereMonth('tgl_presensi', $bulan)->whereYear('tgl_presensi', $tahun)
+            ->orderBy('tgl_presensi', 'asc')
+            ->get();
+
+        // muncul di network bukan di console.log dan di console.log(respond)
+        // dd($histori);
+        return view('presensi.gethistori', compact('histori'));
+    }
+
+    public function izin()
+    {
+        return view('presensi.izin');
+    }
+
+    public function buatizin()
+    {
+        return view('presensi.buatizin');
+    }
+
+    public function storeizin(Request $request)
+    {
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $data = [
+            'nik' => $nik,
+            'tgl_izin' => $request->tgl_izin,
+            'status' => $request->status,
+            'keterangan' => $request->keterangan,
+        ];
+        $simpan = DB::table('pengajuan_izin')->insert($data);
+        if ($simpan) {
+            return redirect()->route('presensi.izin')->with('success', 'Data berhasil disimpan');
+        } else {
+            return redirect()->route('presensi.izin')->with('error', 'Data gagal disimpan');
         }
     }
 
