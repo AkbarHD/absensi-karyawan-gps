@@ -25,8 +25,8 @@ class PresensiController extends Controller
         $tgl_presensi = date('Y-m-d');
         $jam_in = date('H:i:s');
         // validasi radius
-        $latitudekantor = -6.3908;
-        $longitudekantor = 106.7243;
+        $latitudekantor = -6.353264;
+        $longitudekantor = 106.631735;
         // ambil dari ajax
         $lokasi = $request->lokasi;
         // dd($lokasi);
@@ -186,7 +186,9 @@ class PresensiController extends Controller
 
     public function izin()
     {
-        return view('presensi.izin');
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $dataizin = DB::table('pengajuan_izin')->where('nik', $nik)->get();
+        return view('presensi.izin', compact('dataizin'));
     }
 
     public function buatizin()

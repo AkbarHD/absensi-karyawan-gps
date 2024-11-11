@@ -37,7 +37,17 @@ class DashboardController extends Controller
             ->orderBy('jam_in')
             ->where('tgl_presensi', $hariini)->get();
         $namabulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "Sepetember", "Oktober", "November", "Desember"];
+        $rekapizin = DB::table('pengajuan_izin')->selectRaw('SUM(IF(status="i",1,0)) as jmlizin, SUM(IF(status="s",1,0)) as jmlsakit')
+            ->where('nik', $nik)->where('status_approved', 1)
+            ->whereMonth('tgl_izin', $bulanini)->whereYear('tgl_izin', $tahunini)->first();
         // dd($namabulan[$bulanini]);
-        return view('dashboard.dashboard', compact('absenHariini', 'historibulanini', 'namabulan', 'tahunini', 'bulanini', 'rekappresensi', 'leaderboard'));
+        return view('dashboard.dashboard', compact('absenHariini', 'historibulanini', 'namabulan', 'tahunini', 'bulanini', 'rekappresensi', 'leaderboard', 'rekapizin'));
+
+    }
+
+    // for admin
+    public function dashboardadmin()
+    {
+        return view('dashboard.dashboardadmin');
     }
 }

@@ -2,6 +2,15 @@
 @section('header')
     {{-- materialize datepicker --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <style>
+        .datepicker-modal {
+            max-height: 430px !important;
+        }
+
+        .datepicker-date-display {
+            background-color: #0f3a73 !important;
+        }
+    </style>
     <div class="appHeader bg-primary text-light">
         <div class="left">
             <a href="{{ route('dashboard') }}" class="headerButton goBack">
@@ -24,8 +33,8 @@
                 <div class="form-group">
                     <select name="status" id="status" class="form-control">
                         <option value="" hidden>Izin / Sakit</option>
-                        <option value="1">Izin</option>
-                        <option value="2">Sakit</option>
+                        <option value="i">Izin</option>
+                        <option value="s">Sakit</option>
                     </select>
                 </div>
 

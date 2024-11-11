@@ -96,9 +96,9 @@
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
             // marker
-            var marker = L.marker([-6.3908, 106.7243]).addTo(map);
+            var marker = L.marker([-6.353264, 106.631735]).addTo(map);
             // radius kantor (tidak boleh di luar radius ini)
-            var circle = L.circle([-6.3908, 106.7243], {
+            var circle = L.circle([-6.353264, 106.631735], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
