@@ -153,6 +153,7 @@ class PresensiController extends Controller
         $update = DB::table('karyawan')->where('nik', $nik)->update($data);
         if ($update) {
             if ($request->hasFile('foto')) {
+                Storage::delete('public/uploads/karyawan/' . $karyawan->foto);
                 $request->file('foto')->storeAs('public/uploads/karyawan/', $foto);
             }
             return redirect()->back()->with('success', 'Data berhasil diupdate');

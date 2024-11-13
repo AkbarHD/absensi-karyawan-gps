@@ -139,7 +139,7 @@
                             text: status[1],
                             icon: 'success',
                         })
-                        setTimeout("location.href = '{{ route('dashboard') }}';", 4000);
+                        setTimeout("location.href = '{{ route('dashboard') }}';", 3000);
                         // setTimeout("location.href = '/dashboard';", 1000);
                     } else {
                         if (status[2] == 'radius') {
