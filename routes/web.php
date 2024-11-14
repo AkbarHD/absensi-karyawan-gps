@@ -5,17 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 // agar ketika user sudah login tidak bisa mengakses halaman login
 Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/', function () {
@@ -30,7 +19,8 @@ Route::middleware(['guest:user'])->group(function () {
         return view('auth.loginadmin');
     })->name('login.admin');
 
-    // Route::post('/proseslogin', [AuthController::class, 'proseslogin'])->name('proseslogin');
+    Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin'])->name('proses.login.admin');
+
 });
 
 
@@ -52,4 +42,8 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/presensi/storeizin', [PresensiController::class, 'storeizin'])->name('presensi.storeizin');
 });
 
-Route::get('/dashboardadmin', [DashboardController::class, 'dashboardadmin'])->name('dashboardadmin');
+Route::middleware(['auth:user'])->group(function () {
+    Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin'])->name('proseslogout.admin');
+    // utk memebedakan auth karayawan
+    Route::get('/panel/dashboardadmin', [DashboardController::class, 'dashboardadmin'])->name('dashboardadmin');
+});
