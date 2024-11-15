@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
+
 
 // agar ketika user sudah login tidak bisa mengakses halaman login
 Route::middleware(['guest:karyawan'])->group(function () {
@@ -42,8 +44,12 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/presensi/storeizin', [PresensiController::class, 'storeizin'])->name('presensi.storeizin');
 });
 
+// ------------ untuk dashboard admin
 Route::middleware(['auth:user'])->group(function () {
     Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin'])->name('proseslogout.admin');
     // utk memebedakan auth karayawan
     Route::get('/panel/dashboardadmin', [DashboardController::class, 'dashboardadmin'])->name('dashboardadmin');
+
+    // karyawan
+    Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
 });
