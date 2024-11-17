@@ -50,8 +50,13 @@
     <script src="{{ asset('tabler/dist/libs/jsvectormap/dist/maps/world.js?1692870487') }}" defer></script>
     <script src="{{ asset('tabler/dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487') }}" defer></script>
     <!-- Tabler Core -->
+    {{-- cdn jquery --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('tabler/dist/js/tabler.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('tabler/dist/js/demo.min.js?1692870487') }}" defer></script>
+
+    @stack('myscript')
 
 </body>
 
