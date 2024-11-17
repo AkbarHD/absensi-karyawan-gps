@@ -16,6 +16,9 @@
         </div>
     </div>
 
+
+
+
     {{-- page body --}}
     <div class="page-body">
         <div class="container-xl">
@@ -305,7 +308,7 @@
                 var nama_lengkap = $('#nama_lengkap').val();
                 var jabatan = $('#jabatan').val();
                 var no_hp = $('#no_hp').val();
-                var kode_dept = $('#kode_dept').val();
+                var kode_dept = $('#frmKaryawan').find('#kode_dept').val();
                 if (nik == "") {
                     $('#nik').focus();
                     Swal.fire({
@@ -348,6 +351,31 @@
                     return false;
                 }
             });
+
+            @if (Session::has('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "{{ Session::get('success') }}",
+                    showConfirmButton: true,
+                    timer: 1500
+                });
+            @endif
+            @if ($errors->any())
+                let errorMessages = "";
+                @foreach ($errors->all() as $error)
+                    errorMessages += "{{ $error }}\n";
+                @endforeach
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: errorMessages,
+                    showConfirmButton: true,
+                    timer: 3000
+                });
+            @endif
+
         });
     </script>
 @endpush

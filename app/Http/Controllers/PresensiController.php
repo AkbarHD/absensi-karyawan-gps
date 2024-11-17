@@ -131,7 +131,7 @@ class PresensiController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
         } else {
-            $foto = $karyawan->foto;
+            $foto = null;
         }
 
         // Periksa apakah password diisi
