@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,10 @@ Route::middleware(['auth:user'])->group(function () {
     // karyawan
     Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
     Route::post('/karyawan/store', [KaryawanController::class, 'store'])->name('karyawan.store');
+    Route::get('/karyawan/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit'); // buat ambil data yang di edit
+    Route::put('/karyawan/{nik}/update', [KaryawanController::class, 'update'])->name('karyawan.update');
+    Route::delete('/karyawan/{nik}/destroy', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
+
+    // departement
+    Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
 });

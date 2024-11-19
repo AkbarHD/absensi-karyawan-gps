@@ -248,9 +248,13 @@
                                 <a class="dropdown-item" href="{{ route('karyawan.index') }}">
                                     Data Karyawan
                                 </a>
+                                <a class="dropdown-item" href="{{ route('departemen.index') }}">
+                                    Data Departemen
+                                </a>
                             </div>
 
                         </div>
+
                     </div>
                 </li>
 
