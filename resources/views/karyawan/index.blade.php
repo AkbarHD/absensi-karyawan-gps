@@ -25,6 +25,50 @@
                         <div class="card-body">
                             <a href="javascript:void(0);" class="btn btn-primary" id="btnTambahKaryawan">Tambah data</a>
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <form action="{{ route('karyawan.index') }}" method="GET">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="nama_karyawan" id="nama_karyawan"
+                                                        class="form-control" placeholder="Nama karyawan"
+                                                        value="{{ Request('nama_karyawan') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <select name="kode_dept" id="kode_dept" class="form-select">
+                                                        <option value="" hidden>Departemen</option>
+                                                        @forelse ($department as $d)
+                                                            <option
+                                                                {{ Request('kode_dept') == $d->kode_dept ? 'selected' : '' }}
+                                                                value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                                        @empty
+                                                            <option value="">Tidak ada data</option>
+                                                        @endforelse
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                            fill="none" stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" width="24" height="20"
+                                                            stroke-width="2">
+                                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                                            <path d="M21 21l-6 -6"></path>
+                                                        </svg>
+                                                        Cari
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
                             <div class="row mt-3">
                                 <div class="col-12">
                                     <table class="table table-bordered">
@@ -322,16 +366,15 @@
                         nik: nik
                     },
                     success: function(response) {
-                        // kita tidak menggunakan @include('karyawan.edit') tetapi menggunakan #loadededitform
                         $('#loadededitform').html(response);
+                        $('#modal-editKaryawan').modal('show');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseJSON.error);
                     }
                 });
-                $('#modal-editKaryawan').modal('show');
-
             });
+
 
 
             $('#frmKaryawan').on('submit', function() {

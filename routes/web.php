@@ -60,4 +60,8 @@ Route::middleware(['auth:user'])->group(function () {
 
     // departement
     Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
+    Route::post('/departemen/store', [DepartemenController::class, 'store'])->name('departemen.store');
+    Route::get('/departement/edit', [DepartemenController::class, 'edit'])->name('departemen.edit'); // buat ambil data yang di edit
+    Route::put('/departemen/{kode}/update', [DepartemenController::class, 'update'])->name('departemen.update');
+    Route::delete('/departemen/{kode}/destroy', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
 });

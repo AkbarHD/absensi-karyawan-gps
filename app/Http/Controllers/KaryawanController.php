@@ -97,10 +97,11 @@ class KaryawanController extends Controller
 
         $karyawan = DB::table('karyawan')
             ->where('nik', $nik)
-            ->first();
+            ->first(); // Mengambil satu data saja
 
-        $departemen = DB::table('departemen')->get();
+        $departemen = DB::table('departemen')->get(); // Data untuk dropdown departemen
 
+        // Pastikan data ditemukan
         if (!$karyawan) {
             return response()->json(['error' => 'Data karyawan tidak ditemukan'], 404);
         }
