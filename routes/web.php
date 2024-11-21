@@ -64,4 +64,9 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/departement/edit', [DepartemenController::class, 'edit'])->name('departemen.edit'); // buat ambil data yang di edit
     Route::put('/departemen/{kode}/update', [DepartemenController::class, 'update'])->name('departemen.update');
     Route::delete('/departemen/{kode}/destroy', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
+
+    // presesnsi
+    Route::get('/presensi/monitoring', [PresensiController::class, 'monitoring'])->name('monitoring.index');
+    Route::post('/monitoring/getpresensi', [PresensiController::class, 'getpresensi'])->name('monitoring.getpresensi');
+
 });

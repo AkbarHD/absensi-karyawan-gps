@@ -11,7 +11,7 @@ class DepartemenController extends Controller
     public function index(Request $request)
     {
         $query = Departemen::query();
-        $query->select('departemen.kode_dept', 'departemen.nama_dept');
+        $query->select('departemen.*');
         if (!empty($request->nama_dept)) {
             // $query->where('departemen.kode_dept', 'like', '%' . $request->kode_dept . '%');
             $query->where('departemen.nama_dept', 'like', '%' . $request->nama_dept . '%');
