@@ -41,8 +41,8 @@
                                                 <path d="M12 15v3" />
                                             </svg>
                                         </div>
-                                        <input type="text" name="tanggal" id="tanggal" placeholder="Tanggal Presensi"
-                                            class="form-control" autocomplete="off">
+                                        <input type="text" name="tanggal" id="tanggal" value="{{ date('Y-m-d') }}"
+                                            placeholder="Tanggal Presensi" class="form-control" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +60,7 @@
                                                 <th>Foto</th>
                                                 <th>Jam Keluar</th>
                                                 <th>Foto</th>
+                                                <th>Keterangan</th>
                                             </tr>
                                         </thead>
                                         <tbody id="loadpresensi">
@@ -86,8 +87,9 @@
                 format: 'yyyy-mm-dd'
             });
 
-            $('#tanggal').change(function(e) {
-                var tanggal = $(this).val();
+
+            function loadpresensi() {
+                var tanggal = $('#tanggal').val();
                 // alert(tangal);
                 $.ajax({
                     type: 'POST',
@@ -101,8 +103,13 @@
                         $('#loadpresensi').html(respond);
                     }
                 });
-
+            }
+            // di jalankan ketika tanggal berubah
+            $('#tanggal').change(function(e) {
+                loadpresensi();
             });
+            // di jalankan untuk hari ini
+            loadpresensi();
         });
     </script>
 @endpush
