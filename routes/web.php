@@ -70,4 +70,8 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/monitoring/getpresensi', [PresensiController::class, 'getpresensi'])->name('monitoring.getpresensi');
     Route::post('/tampilkanpeta', [PresensiController::class, 'tampilkanpeta'])->name('monitoring.tampilkanpeta');
 
+    // laporan
+    Route::get('/presensi/laporan', [PresensiController::class, 'laporan'])->name('laporanpresensi');
+    Route::post('/presensi/cetaklaporan', [PresensiController::class, 'cetaklaporan'])->name('cetaklaporan'); // preview
+
 });
