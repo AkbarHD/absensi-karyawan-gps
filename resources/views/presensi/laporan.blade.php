@@ -23,7 +23,7 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('cetaklaporan') }}" target="_blank" method="POST">
+                            <form action="{{ route('cetaklaporan') }}" target="_blank" method="POST" id="cetak">
                                 @csrf
                                 <div class="row mb-2">
                                     <div class="col-12">
@@ -115,3 +115,22 @@
         </div>
     </div>
 @endsection
+
+@push('myscript')
+    <script>
+        $(document).ready(function() {
+            $('#cetak').on('submit', function() {
+                var nik = $('#nik').val();
+                if (nik == "") {
+                    $('#nik').focus();
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'NIK Tidak Boleh Kosong',
+                        icon: 'warning',
+                    });
+                    return false;
+                }
+            });
+        });
+    </script>
+@endpush

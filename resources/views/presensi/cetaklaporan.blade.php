@@ -59,6 +59,10 @@
             width: 40px;
             height: 30px;
         }
+
+        .tanda-tangan {
+            margin-top: 100px !important;
+        }
     </style>
 </head>
 
@@ -66,6 +70,22 @@
 <!-- Set also "landscape" if you need -->
 
 <body class="A4">
+    <?php
+    function selisih($jam_masuk, $jam_keluar)
+    {
+        [$h, $m, $s] = explode(':', $jam_masuk);
+        $dtAwal = mktime($h, $m, $s, '1', '1', '1');
+        [$h, $m, $s] = explode(':', $jam_keluar);
+        $dtAkhir = mktime($h, $m, $s, '1', '1', '1');
+        $dtSelisih = $dtAkhir - $dtAwal;
+        $totalmenit = $dtSelisih / 60;
+        $jam = explode('.', $totalmenit / 60);
+        $sisamenit = $totalmenit / 60 - $jam[0];
+        $sisamenit2 = $sisamenit * 60;
+        $jml_jam = $jam[0];
+        return $jml_jam . ':' . round($sisamenit2);
+    }
+    ?>
 
     <!-- Each sheet element should have the class "sheet" -->
     <!-- "padding-**mm" is optional: you can set 10, 15, 20 or 25 -->
@@ -140,8 +160,12 @@
                 <th>Jam Pulang</th>
                 <th>Foto</th>
                 <th>Keterangan</th>
+                <th>Jumlah kerja</th>
             </tr>
             @forelse ($presensi as $item)
+                @php
+                    $jamterlambat = selisih('07:00:00', $item->jam_in);
+                @endphp
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ date('d-m-Y', strtotime($item->tgl_presensi)) }}</td>
@@ -154,7 +178,7 @@
                     <td>{{ $item->jam_out == null ? 'belum absen' : $item->jam_out }}</td>
                     <td>
                         @if ($item->foto_out == null)
-                            <p></p>
+                            <img src="{{ asset('no-foto.jpg') }}" class="foto" alt="">
                         @else
                             <img src="{{ Storage::url('uploads/absensi/' . $item->foto_out) }}" alt=""
                                 class="foto">
@@ -162,15 +186,46 @@
                     </td>
                     <td>
                         @if ($item->jam_in > '07.00')
-                            <p>Terlambat</p>
+                            <p style="color: red; display: inline;">Terlambat</p> {{ $jamterlambat }}
                         @else
                             <p>Tepat waktu</p>
                         @endif
+                    </td>
+                    <td>
+                        @if ($item->jam_out != null)
+                            @php
+                                $jmljamkerja = selisih($item->jam_in, $item->jam_out);
+                            @endphp
+                            {{ $jmljamkerja }}
+                        @else
+                            @php
+                                $jmljamkerja = 0;
+                            @endphp
+                            {{ $jmljamkerja }}
+                        @endif
+
                     </td>
                 </tr>
             @empty
             @endforelse
 
+        </table>
+
+        <table style="width: 100%;" class="tanda-tangan">
+            <tr>
+                <td style="text-align: center; transform: translateX();">Tangerang, 27-11-2024</td>
+                <td style="text-align: center; transform: translateX();">Tangerang, 27-11-2024</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: bottom; height: 100px;">
+                    <u>Anjely Febby</u> <br>
+                    <i><b>Marketplace Specialist</b></i>
+                </td>
+                <td style="text-align: center; vertical-align: bottom;">
+                    <u>Akbar Hossam Delmiro</u> <br>
+                    <i><b>Head Of IT</b></i>
+                </td>
+            </tr>
         </table>
 
     </section>
