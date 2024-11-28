@@ -23,7 +23,7 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('cetaklaporan') }}" target="_blank" method="POST" id="cetak">
+                            <form action="{{ route('cetak.rekap') }}" target="_blank" method="POST" id="cetak">
                                 @csrf
                                 <div class="row mb-2">
                                     <div class="col-12">
@@ -59,20 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <select name="nik" id="nik" class="form-select">
-                                                <option value="" hidden>Pilih Karyawan</option>
-                                                @forelse ($karyawan as $d)
-                                                    <option value="{{ $d->nik }}">{{ $d->nama_lengkap }}
-                                                    </option>
-                                                @empty
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <div class="row mb-2">
                                     <div class="col-6">

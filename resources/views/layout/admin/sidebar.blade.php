@@ -310,7 +310,7 @@
                                 <a class="dropdown-item" href="{{ route('laporanpresensi') }}">
                                     Laporan Presensi
                                 </a>
-                                <a class="dropdown-item" href="{{ route('departemen.index') }}">
+                                <a class="dropdown-item" href="{{ route('presensi.rekap') }}">
                                     Rekap Presensi
                                 </a>
                             </div>

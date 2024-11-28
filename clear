@@ -1,0 +1,137 @@
+[33mcommit 4ae340b17db1aa9e03994587a14540c400d9c690[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Nov 27 16:40:19 2024 +0700
+
+    perbaikan laporan presens
+
+[33mcommit 7a693d32550650c79892a0ef1ee4395735ef6ea9[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Tue Nov 26 17:21:22 2024 +0700
+
+    membuat preview laporan presensi
+
+[33mcommit 2f7a6d8e42db4e5096a13c62d320b58385ce45c2[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Sat Nov 23 17:50:49 2024 +0700
+
+    show peta lokasi presensi di halaman monitoring
+
+[33mcommit 6dc9f983f589d1cd52153a91c7ecc3485a0bd73d[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Fri Nov 22 08:44:39 2024 +0700
+
+    monitoring presensi fikx and count selisih terlambat
+
+[33mcommit d7d34206914afb65e6cfd480664350e723a7e80f[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Thu Nov 21 23:44:35 2024 +0700
+
+    monitoring presensi (no fik)
+
+[33mcommit 0e04e1521068e198a3082f6cd356418e5ca90260[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Nov 20 13:04:00 2024 +0700
+
+    crud departent and fiks edit karyawan for modal
+
+[33mcommit a7a9d817cea3f9f67d7241aa87c1e18b868b573d[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Nov 20 00:58:20 2024 +0700
+
+    edit dan delete karyawan
+
+[33mcommit 3dbe5d7a25c965c7527f0c641b4bcd9f0cb2a7a2[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Mon Nov 18 00:11:39 2024 +0700
+
+    tambah data
+
+[33mcommit 1656af6a7b27c15b779a8bb1f1823d319c594b41[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Sun Nov 17 10:30:31 2024 +0700
+
+    tambah karyawan (no fix)
+
+[33mcommit 2aebe60da997ac85ba51230dff92102ccbefca11[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Sat Nov 16 03:50:27 2024 +0700
+
+    search dan pagination
+
+[33mcommit 994484a779e7f19a12ee707f4598724c3cab6ce8[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Fri Nov 15 08:34:17 2024 +0700
+
+    display data karyawan
+
+[33mcommit 6a1d04ba04488db362ff3c0b47974ea7437f8fd5[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Thu Nov 14 11:03:57 2024 +0700
+
+    login administrator
+
+[33mcommit 7cbab9ea277084bbc62306a8244330a1dc085566[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Nov 13 22:55:07 2024 +0700
+
+    fiks
+
+[33mcommit 968c940cb130049c275379848ab33e8e50d03b88[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Mon Nov 11 19:55:20 2024 +0700
+
+    migrasi template tabler io for admin
+
+[33mcommit 971b3c30dc4a2bfed41cb9cbb569513dc8b906b5[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Mon Nov 11 01:47:06 2024 +0700
+
+    buat izin
+
+[33mcommit b07be08ba52fc88ed9c5f76ad8104d95106f3959[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Fri Nov 8 00:52:25 2024 +0700
+
+    edir profile fiks
+
+[33mcommit 46c17ff4ed7a2e6659d62397e07a498e383ffbd8[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Thu Nov 7 09:36:52 2024 +0700
+
+    edit profile (no fix)
+
+[33mcommit cba5f80b18c4dd7fdafc18ac60c9d67a8f565f9a[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Nov 6 12:26:36 2024 +0700
+
+    config leaderboard presensi, anda count rekap presensi
+
+[33mcommit eb06d7e60ebf69ac28c0bf46debfc92b42d2ae30[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Tue Nov 5 12:23:39 2024 +0700
+
+    display data presensi where bulan dan tahun ini
+
+[33mcommit 8e11988d56331b30a7f8b67e4b33614d1c744ce0[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Mon Nov 4 09:00:01 2024 +0700
+
+    validasi radius
+
+[33mcommit f355070196a66c8a97b9491999c7a89c3bb00e51[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Fri Nov 1 08:32:32 2024 +0700
+
+    set webcam anda location
+
+[33mcommit 992cf1ee4ea9ebbbb645c4f6bed2e1351863faac[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Oct 30 18:50:42 2024 +0700
+
+    set up database
+
+[33mcommit e8862d66190baac7fad99c1427674ed4899cc263[m
+Author: Akbar Hossam Delmiro <akbarhossam123@gmail.com>
+Date:   Wed Oct 30 08:29:19 2024 +0700
+
+    first commit

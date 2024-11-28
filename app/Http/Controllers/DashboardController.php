@@ -32,7 +32,8 @@ class DashboardController extends Controller
             ->whereMonth('tgl_presensi', $bulanini)->whereYear('tgl_presensi', $tahunini)
             ->first();
         // dd($rekappresensi);
-        $leaderboard = DB::table('presensi')->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
+        $leaderboard = DB::table('presensi')
+            ->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
             ->select('karyawan.*', 'presensi.*')
             ->orderBy('jam_in')
             ->where('tgl_presensi', $hariini)->get();

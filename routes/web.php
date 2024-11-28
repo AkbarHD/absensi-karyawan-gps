@@ -23,7 +23,6 @@ Route::middleware(['guest:user'])->group(function () {
     })->name('login.admin');
 
     Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin'])->name('proses.login.admin');
-
 });
 
 
@@ -73,5 +72,7 @@ Route::middleware(['auth:user'])->group(function () {
     // laporan
     Route::get('/presensi/laporan', [PresensiController::class, 'laporan'])->name('laporanpresensi');
     Route::post('/presensi/cetaklaporan', [PresensiController::class, 'cetaklaporan'])->name('cetaklaporan'); // preview
+    Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
+    Route::post('/presensi/cetakrekap', [PresensiController::class, 'cetakrekap'])->name('cetak.rekap');
 
 });
