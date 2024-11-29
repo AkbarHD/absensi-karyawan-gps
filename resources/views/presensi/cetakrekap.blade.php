@@ -45,15 +45,19 @@
 
         .tablepresensi tr th {
             border: 1px solid #131212;
-            padding: 8px;
+            padding: 5px;
             background-color: #dbdbdb;
-            font-size: 10px;
+            font-size: 8px;
+            text-align: center;
+            margin: 0;
         }
 
         .tablepresensi tr td {
             border: 1px solid #131212;
-            padding: 8px;
-            font-size: 12px;
+            padding: 5px;
+            font-size: 8px;
+            text-align: center;
+            margin: 0;
         }
 
         .foto {
@@ -67,15 +71,8 @@
     </style>
 </head>
 
-<!-- Set "A5", "A4" or "A3" for class name -->
-<!-- Set also "landscape" if you need -->
-
 <body class="A4 landscape">
 
-    ?>
-
-    <!-- Each sheet element should have the class "sheet" -->
-    <!-- "padding-**mm" is optional: you can set 10, 15, 20 or 25 -->
     <section class="sheet padding-10mm">
 
         <!-- Write HTML just like a web page -->
@@ -101,6 +98,8 @@
                 <th rowspan="2">NIK</th>
                 <th rowspan="2">Nama Karyawan</th>
                 <th colspan="31">Tanggal</th>
+                <th rowspan="2">TH</th>
+                <th rowspan="2">TT</th>
             </tr>
             <tr>
                 <?php
@@ -116,23 +115,46 @@
                     <td>{{ $d->nik }}</td>
                     <td>{{ $d->nama_lengkap }}</td>
                     <?php
+                        $totalhadir = 0;
+                        $totalterlambat = 0;
                     for($i = 1; $i <= 31; $i++){
                         $tgl = "tgl_" . $i;
+                        // karena semua data tidak semuanya terisi maka kit atasi
+                        if(empty($d->$tgl)){
+                            $hadir = ['', ''];
+                            $totalhadir += 0;
+                        }else{
+                            $hadir = explode("-", $d->$tgl);
+                            $totalhadir += 1;
+                            if($hadir[0] > '07:00:00'){
+                                $totalterlambat += 1;
+                            }
+                        }
                      ?>
-                    <td>{{ $d->$tgl }}</td>
+                    {{-- <td>{{ $hadir[0] }} - {{ $hadir[1] }}</td> --}}
+                    <td>
+                        <span
+                            style="font-size: 8px; color:{{ $hadir[0] > '07:00:00' ? 'red' : '' }}">{{ $hadir[0] }}</span>
+                        <span style="font-size: 8px;">{{ $hadir[1] }}</span>
+                    </td>
                     <?php
                     }
                     ?>
+                    <td>{{ $totalhadir }}</td>
+                    <td>{{ $totalterlambat }}</td>
                 </tr>
             @empty
+                <tr>
+                    <td colspan="33" style="text-align: center;">Tidak ada data tersedia</td>
+                </tr>
             @endforelse
 
         </table>
 
         <table style="width: 100%;" class="tanda-tangan">
             <tr>
-                <td style="text-align: center; transform: translateX();">Tangerang, 27-11-2024</td>
-                <td style="text-align: center; transform: translateX();">Tangerang, 27-11-2024</td>
+                <td style="text-align: center; transform: translateX();">Tangerang, {{ date('d-m-Y') }}</td>
+                <td style="text-align: center; transform: translateX();">Tangerang, {{ date('d-m-Y') }}</td>
             </tr>
             <tr>
                 <td style="text-align: center; vertical-align: bottom; height: 100px;">
