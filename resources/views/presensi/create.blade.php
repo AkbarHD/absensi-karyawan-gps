@@ -87,23 +87,29 @@
         }
 
         function successCallback(position) {
-            // taroh di input lokasi
+            // taroh di input lokasi (untuk mengambil lokasi saat ini)
             lokasi.value = position.coords.latitude + ',' + position.coords.longitude;
+            var lokasi_kantor = "{{ $lok_kantor->lokasi_kantor }}";
+            // alert(lokasi_kantor);
+            var lok = lokasi_kantor.split(",");
+            var lat_kantor = lok[0];
+            var long_kantor = lok[1];
+            var radius = "{{ $lok_kantor->radius }}"
             // menampilkan map berdasarkan lokasi kita
             var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 17);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 20,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
-            // marker
-            var marker = L.marker([-6.353264, 106.631735]).addTo(map);
+            // marker buat user yang ingin absen
+            var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
             // radius kantor (tidak boleh di luar radius ini)
-            var circle = L.circle([-6.353264, 106.631735], {
+            var circle = L.circle([lat_kantor, long_kantor], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 // batas radius tidak boleh dari 2 meter dari lingkaran (kantor)
-                radius: 79
+                radius: radius
             }).addTo(map);
         }
 

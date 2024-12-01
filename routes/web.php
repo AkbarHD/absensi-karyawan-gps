@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
+
 
 
 // agar ketika user sudah login tidak bisa mengakses halaman login
@@ -68,11 +70,16 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/presensi/monitoring', [PresensiController::class, 'monitoring'])->name('monitoring.index');
     Route::post('/monitoring/getpresensi', [PresensiController::class, 'getpresensi'])->name('monitoring.getpresensi');
     Route::post('/tampilkanpeta', [PresensiController::class, 'tampilkanpeta'])->name('monitoring.tampilkanpeta');
+    Route::get('/presensi/izinsakit', [PresensiController::class, 'izinsakit'])->name('presensi.izin.sakit');
 
     // laporan
     Route::get('/presensi/laporan', [PresensiController::class, 'laporan'])->name('laporanpresensi');
     Route::post('/presensi/cetaklaporan', [PresensiController::class, 'cetaklaporan'])->name('cetaklaporan'); // preview
     Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
     Route::post('/presensi/cetakrekap', [PresensiController::class, 'cetakrekap'])->name('cetak.rekap');
+
+    // Konfigurasi
+    Route::get('/konfigurasi/lokasikantor', [KonfigurasiController::class, 'lokasikantor'])->name('lokasikantor');
+    Route::post('/konfigurasi/lokasikantor/update', [KonfigurasiController::class, 'updatelokasikantor'])->name('lokasikantor.update');
 
 });

@@ -16,7 +16,9 @@ class PresensiController extends Controller
         $hariini = date('Y-m-d');
         $nik = Auth::guard('karyawan')->user()->nik;
         $cek = DB::table('presensi')->where('tgl_presensi', $hariini)->where('nik', $nik)->count();
-        return view('presensi.create', compact('cek'));
+        $lok_kantor = DB::table('konfigurasi_lokasi')->where('id', 1)->first();
+        // dd($lokasi_kantor);
+        return view('presensi.create', compact('cek', 'lok_kantor'));
     }
 
     public function store(Request $request)
@@ -25,14 +27,17 @@ class PresensiController extends Controller
         $tgl_presensi = date('Y-m-d');
         $jam_in = date('H:i:s');
         // validasi radius
-        $latitudekantor = -6.353264;
-        $longitudekantor = 106.631735;
+        $lok_kantor = DB::table('konfigurasi_lokasi')->where('id', 1)->first();
+        $lok = explode(",", $lok_kantor->lokasi_kantor);
+        $latitudekantor = $lok[0];
+        $longitudekantor = $lok[1];
         // ambil dari ajax
         $lokasi = $request->lokasi;
         // dd($lokasi);
         $lokasiuser = explode(",", $lokasi);
         $latitudeuser = $lokasiuser[0];
         $longitudeuser = $lokasiuser[1];
+        //
         $jarak = $this->distance($latitudekantor, $longitudekantor, $latitudeuser, $longitudeuser);
         $radius = round($jarak['meters']);
         // dd($radius);
@@ -51,6 +56,7 @@ class PresensiController extends Controller
         $formatName = $nik . "-" . $tgl_presensi . '-' . $ket;
         // di explode
         $image_parts = explode(";base64,", $image);
+        dd($image_parts);
         // di decode
         $image_base64 = base64_decode($image_parts[1]);
         // file asli foto absensi
@@ -58,10 +64,21 @@ class PresensiController extends Controller
         // letak folder dan nama file
         $file = $folderPath . $fileName;
         // cek user sudah absen atau belum
-        if ($radius > 60) {
+        if ($radius > $lok_kantor->radius) {
             echo "error|Maaf anda berada diluar radius, Jarak anda " . $radius . " meter dari kantor|radius";
         } else {
             if ($cek > 0) {
+                // cek user sudah absen pulang atau belum
+                $presensi = DB::table('presensi')
+                    ->where('tgl_presensi', $tgl_presensi)
+                    ->where('nik', $nik)
+                    ->first();
+
+                if ($presensi->jam_out) {
+                    // Jika jam_out sudah terisi, beri pesan error
+                    echo "error|Anda sudah absen pulang, tidak dapat absen lagi hari ini|out";
+                    return;
+                }
                 // simpan to database
                 $data = [
                     'jam_out' => $jam_in,
@@ -318,5 +335,10 @@ class PresensiController extends Controller
             ->get();
         // dd($rekap);
         return view('presensi.cetakrekap', compact('bulan', 'tahun', 'rekap', 'namabulan'));
+    }
+
+    public function izinsakit()
+    {
+        return view('presensi.izinsakit');
     }
 }
