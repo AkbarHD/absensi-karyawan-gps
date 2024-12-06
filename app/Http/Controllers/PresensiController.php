@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PengajuanIzin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -337,8 +338,47 @@ class PresensiController extends Controller
         return view('presensi.cetakrekap', compact('bulan', 'tahun', 'rekap', 'namabulan'));
     }
 
-    public function izinsakit()
+    public function izinsakit(Request $request)
     {
-        return view('presensi.izinsakit');
+        // $izinsakit = DB::table('pengajuan_izin')
+        //     ->join('karyawan', 'pengajuan_izin.nik', '=', 'karyawan.nik')
+        //     ->get();
+        $query = PengajuanIzin::query();
+        $query->select('id', 'tgl_izin', 'pengajuan_izin.nik', 'nama_lengkap', 'jabatan', 'status', 'status_approved');
+        $query->join('karyawan', 'pengajuan_izin.nik', '=', 'karyawan.nik');
+        if (!empty($request->dari) && !empty($request->sampai)) {
+            $query->whereBetween('tgl_izin', [$request->dari, $request->sampai]);
+        }
+        $query->orderBy('tgl_izin', 'DESC');
+        $izinsakit = $query->get();
+        return view('presensi.izinsakit', compact('izinsakit'));
+    }
+
+    public function approveizinsakit(Request $request)
+    {
+        $status_approved = $request->status_approved;
+        $id = $request->id_formizin;
+        $update = DB::table('pengajuan_izin')->where('id', $id)->update([
+            'status_approved' => $status_approved
+        ]);
+        if ($update) {
+            return redirect()->back()->with('success', 'Data pengajuan berhasil di setujui');
+        } else {
+            return redirect()->back()->with('error', 'Data pengajuan gagal di setujui');
+        }
+    }
+
+    public function batalkanizinsakit($id)
+    {
+        $update = DB::table('pengajuan_izin')->where('id', $id)->update([
+            'status_approved' => 0
+        ]);
+        if ($update) {
+            return redirect()->back()->with('success', 'Data berhasil di perbaruikan');
+        } else {
+            return redirect()->back()->with('error', 'Data gagal di perbaruikan');
+
+        }
+
     }
 }

@@ -71,6 +71,11 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/monitoring/getpresensi', [PresensiController::class, 'getpresensi'])->name('monitoring.getpresensi');
     Route::post('/tampilkanpeta', [PresensiController::class, 'tampilkanpeta'])->name('monitoring.tampilkanpeta');
     Route::get('/presensi/izinsakit', [PresensiController::class, 'izinsakit'])->name('presensi.izin.sakit');
+    // kalo ini ada post, maka akan ada pengiriman data (request)
+    Route::post('/presensi/approveizinsakit', [PresensiController::class, 'approveizinsakit'])->name('approve.izinsakit');
+    // ini kenapa bisa get? karena ini tidak ada pengiriman data, pure update data
+    Route::get('/presensi/{id}/batalkanizinsakit', [PresensiController::class, 'batalkanizinsakit'])->name('batal.izinsakit');
+
 
     // laporan
     Route::get('/presensi/laporan', [PresensiController::class, 'laporan'])->name('laporanpresensi');
