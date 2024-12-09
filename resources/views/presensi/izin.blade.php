@@ -43,7 +43,7 @@
                                     <small class="text-muted">{{ $d->keterangan }}</small>
                                 </div>
 
-                                @if ($d->status_approved == 0)
+                                @if ($d->status_approved == 3)
                                     <span class="badge badge-warning">Waiting</span>
                                 @elseif($d->status_approved == 1)
                                     <span class="badge badge-success">Approved</span>

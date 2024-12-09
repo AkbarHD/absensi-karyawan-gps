@@ -59,6 +59,31 @@
                 format: "yyyy-mm-dd",
             });
 
+            $('#tgl_izin').on('change', function(e) {
+                var tgl_izin = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('presensi.cekpengajuanizin') }}',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        tgl_izin: tgl_izin
+                    },
+                    cache: false,
+                    success: function(respond) {
+                        // alert(respond);
+                        if (respond == 1) {
+                            Swal.fire({
+                                title: 'Oops!',
+                                text: 'Anda sudah melakukan izin pada tanggal tersebut',
+                                icon: 'warning'
+                            }).then((result) => {
+                                $('#tgl_izin').val("");
+                            });
+                        }
+                    }
+                });
+            });
+
             // Inisialisasi Materialize Select
 
             // Validasi form

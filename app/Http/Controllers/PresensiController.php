@@ -281,6 +281,16 @@ class PresensiController extends Controller
             ->where('nik', $nik)
             ->orderBy('tgl_presensi')
             ->get();
+        if ($request->has('exportexcel')) {
+            // Set header untuk export Excel
+            $time = date('d-M-Y H:i:s');
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Rekap_Presensi_$time.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            return view('presensi.cetaklaporanexcel', compact('bulan', 'tahun', 'namabulan', 'karyawan', 'presensi'));
+        }
+
         return view('presensi.cetaklaporan', compact('bulan', 'tahun', 'namabulan', 'karyawan', 'presensi'));
     }
 
@@ -292,6 +302,7 @@ class PresensiController extends Controller
 
     public function cetakrekap(Request $request)
     {
+
         $bulan = $request->bulan;
         $tahun = $request->tahun;
         $namabulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "Sepetember", "Oktober", "November", "Desember"];
@@ -335,6 +346,15 @@ class PresensiController extends Controller
             ->groupBy('presensi.nik', 'karyawan.nama_lengkap')
             ->get();
         // dd($rekap);
+        if ($request->has('exportexcel')) {
+            // Set header untuk export Excel
+            $time = date('d-M-Y H:i:s');
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Rekap_Presensi_$time.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+        }
         return view('presensi.cetakrekap', compact('bulan', 'tahun', 'rekap', 'namabulan'));
     }
 
@@ -349,8 +369,21 @@ class PresensiController extends Controller
         if (!empty($request->dari) && !empty($request->sampai)) {
             $query->whereBetween('tgl_izin', [$request->dari, $request->sampai]);
         }
+
+        if (!empty($request->nik)) {
+            $query->where('pengajuan_izin.nik', $request->nik);
+        }
+
+        if (!empty($request->nama_lengkap)) {
+            $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap . '%');
+        }
+
+        if ($request->status_approved !== null) {
+            $query->where('status_approved', $request->status_approved);
+        }
         $query->orderBy('tgl_izin', 'DESC');
-        $izinsakit = $query->get();
+        $izinsakit = $query->paginate(2);
+        $izinsakit->appends($request->all());
         return view('presensi.izinsakit', compact('izinsakit'));
     }
 
@@ -379,6 +412,13 @@ class PresensiController extends Controller
             return redirect()->back()->with('error', 'Data gagal di perbaruikan');
 
         }
+    }
 
+    public function cekpengajuanizin(Request $request)
+    {
+        $tgl_izin = $request->tgl_izin;
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $cekpengajuanizin = DB::table('pengajuan_izin')->where('tgl_izin', $tgl_izin)->where('nik', $nik)->count();
+        return $cekpengajuanizin;
     }
 }

@@ -12,10 +12,13 @@
 
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
+
+                <!-- Menu Home -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboardadmin') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                    <a class="nav-link {{ request()->routeIs('dashboardadmin') ? 'active' : '' }}"
+                        href="{{ route('dashboardadmin') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -25,16 +28,17 @@
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Home
-                        </span>
+                        <span class="nav-link-title">Home</span>
                     </a>
                 </li>
+
+                <!-- Menu Master Data -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('karyawan.index', 'departemen.index') ? 'active' : '' }}"
+                        href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ request()->routeIs('karyawan.index', 'departemen.index') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -46,35 +50,34 @@
                                 <path d="M16 5.25l-8 4.5" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Master Data
-                        </span>
+                        <span class="nav-link-title">Master Data</span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ request()->routeIs('karyawan.index', 'departemen.index') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('karyawan.index') }}">
+                                <a class="dropdown-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}"
+                                    href="{{ route('karyawan.index') }}">
                                     Data Karyawan
                                 </a>
-                                <a class="dropdown-item" href="{{ route('departemen.index') }}">
+                                <a class="dropdown-item {{ request()->routeIs('departemen.index') ? 'active' : '' }}"
+                                    href="{{ route('departemen.index') }}">
                                     Data Departemen
                                 </a>
                             </div>
-
                         </div>
-
                     </div>
                 </li>
 
-
+                <!-- Menu Monitoring -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('monitoring.index') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                    <a class="nav-link {{ request()->routeIs('monitoring.index') ? 'active' : '' }}"
+                        href="{{ route('monitoring.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-device-desktop-analytics">
+                                stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path
                                     d="M3 4m0 1a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z" />
@@ -87,21 +90,20 @@
                                 <path d="M12 12v-1" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Monitoring Presensi
-                        </span>
+                        <span class="nav-link-title">Monitoring Presensi</span>
                     </a>
                 </li>
 
+                <!-- Menu Data Izin/Sakit -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('presensi.izin.sakit') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                    <a class="nav-link {{ request()->routeIs('presensi.izin.sakit') ? 'active' : '' }}"
+                        href="{{ route('presensi.izin.sakit') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-device-desktop-analytics">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24V24H0z" fill="none" />
                                 <path
                                     d="M3 4m0 1a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z" />
                                 <path d="M7 20h10" />
@@ -113,83 +115,81 @@
                                 <path d="M12 12v-1" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Data Izin / Sakit
-                        </span>
+                        <span class="nav-link-title">Data Izin / Sakit</span>
                     </a>
                 </li>
 
-
+                <!-- Menu Laporan -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('laporanpresensi', 'presensi.rekap') ? 'active' : '' }}"
+                        href="#navbar-laporan" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ request()->routeIs('laporanpresensi', 'presensi.rekap') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-files">
+                                stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M15 3v4a1 1 0 0 0 1 1h4" />
                                 <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" />
                                 <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Laporan
-                        </span>
+                        <span class="nav-link-title">Laporan</span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ request()->routeIs('laporanpresensi', 'presensi.rekap') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('laporanpresensi') }}">
+                                <a class="dropdown-item {{ request()->routeIs('laporanpresensi') ? 'active' : '' }}"
+                                    href="{{ route('laporanpresensi') }}">
                                     Laporan Presensi
                                 </a>
-                                <a class="dropdown-item" href="{{ route('presensi.rekap') }}">
+                                <a class="dropdown-item {{ request()->routeIs('presensi.rekap') ? 'active' : '' }}"
+                                    href="{{ route('presensi.rekap') }}">
                                     Rekap Presensi
                                 </a>
                             </div>
-
                         </div>
-
                     </div>
                 </li>
 
+                <!-- Menu Konfigurasi -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('lokasikantor', 'jamkerja.index') ? 'active' : '' }}"
+                        href="#navbar-konfigurasi" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                        role="button" aria-expanded="{{ request()->routeIs('lokasikantor') ? 'true' : 'false' }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- SVG icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path
-                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
-                                <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24V24H0z" fill="none" />
+                                <path d="M12 3c4.418 0 8 7 8 12h-16c0 -5 3.582 -12 8 -12z" />
+                                <path d="M12 11a2 2 0 1 0 0 -.01" />
+                                <path d="M10 22l2 -2l2 2" />
                             </svg>
                         </span>
-                        <span class="nav-link-title">
-                            Konfigurasi
-                        </span>
+                        <span class="nav-link-title">Konfigurasi</span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div
+                        class="dropdown-menu {{ request()->routeIs('lokasikantor', 'jamkerja.index') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('lokasikantor') }}">
+                                <a class="dropdown-item {{ request()->routeIs('lokasikantor') ? 'active' : '' }}"
+                                    href="{{ route('lokasikantor') }}">
                                     Lokasi Kantor
                                 </a>
-                                <a class="dropdown-item" href="{{ route('presensi.rekap') }}">
-
+                                <a class="dropdown-item {{ request()->routeIs('jamkerja.index') ? 'active' : '' }}"
+                                    href="{{ route('jamkerja.index') }}">
+                                    Jam Kerja
                                 </a>
                             </div>
-
                         </div>
-
                     </div>
                 </li>
             </ul>
         </div>
+
     </div>
 </aside>

@@ -28,4 +28,9 @@ class KonfigurasiController extends Controller
             return redirect()->route('lokasikantor')->with('error', 'Data gagal disimpan');
         }
     }
+
+    public function jamkerja()
+    {
+        return view('konfigurasi.jamkerja');
+    }
 }

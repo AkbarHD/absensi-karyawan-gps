@@ -86,8 +86,8 @@
                                             <path d="M12 15v3" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="nik" class="form-control" id="nik"
-                                        placeholder="NIK">
+                                    <input type="text" name="nik" value="{{ Request('nik') }}" class="form-control"
+                                        id="nik" placeholder="NIK">
                                 </div>
                             </div>
 
@@ -109,37 +109,53 @@
                                             <path d="M12 15v3" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="nama_karyawan" class="form-control" id="nama_karyawan"
-                                        placeholder="Nama Karyawan">
+                                    <input type="text" name="nama_lengkap" value="{{ Request('nama_lengkap') }}"
+                                        class="form-control" id="nama_lengkap" placeholder="Nama Karyawan">
                                 </div>
                             </div>
 
                             <div class="col-3">
                                 <div class="from-group">
                                     <select name="status_approved" class="form-select" id="status_approved">
-                                        <option value="" hidden>Pilih Status</option>
-                                        <option value="0">Waiting</option>
-                                        <option value="1">Disetujui</option>
-                                        <option value="2">Ditolak"></option>
+                                        <option value="" selected disabled>Pilih Status</option>
+                                        <option value="3" {{ Request('status_approved') == 3 ? 'selected' : '' }}>
+                                            Waiting</option>
+                                        <option value="1" {{ Request('status_approved') == 1 ? 'selected' : '' }}>
+                                            Disetujui</option>
+                                        <option value="2" {{ Request('status_approved') == 2 ? 'selected' : '' }}>
+                                            Ditolak</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                            <path d="M21 21l-6 -6" />
-                                        </svg>
-                                        Cari data
-                                    </button>
-                                </div>
+                            <div class="col-3 d-flex align-items-center">
+                                <!-- Tombol Cari Data -->
+                                <button class="btn btn-primary me-2" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                        <path stroke="none" d="M0 0h24V24H0z" fill="none" />
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                        <path d="M21 21l-6 -6" />
+                                    </svg>
+                                    Cari data
+                                </button>
+                                <!-- Tombol Reset -->
+                                <a href="{{ route('presensi.izin.sakit') }}" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                    </svg>
+                                    Reset
+                                </a>
                             </div>
+
+
                         </div>
                     </form>
                 </div>
@@ -164,7 +180,7 @@
                             <tbody>
                                 @forelse ($izinsakit as $d)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration + $izinsakit->firstItem() - 1 }}</td>
                                         <td>{{ $d->nik }}</td>
                                         <td>{{ $d->tgl_izin }}</td>
                                         <td>{{ $d->nama_lengkap }}</td>
@@ -172,7 +188,7 @@
                                         <td>{{ $d->status == 'i' ? 'Izin' : 'Sakit' }}</td>
                                         <td>{{ $d->keterangan }}</td>
                                         <td>
-                                            @if ($d->status_approved == '0')
+                                            @if ($d->status_approved == '3')
                                                 <span class="badge bg-warning text-white">Waiting</span>
                                             @elseif ($d->status_approved == '1')
                                                 <span class="badge bg-success text-white">Approved</span>
@@ -218,7 +234,10 @@
                                 @endforelse
 
                             </tbody>
+
                         </table>
+                        {{ $izinsakit->links('vendor.pagination.bootstrap-5') }}
+
                     </div>
 
                 </div>

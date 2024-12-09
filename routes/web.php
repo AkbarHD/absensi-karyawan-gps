@@ -44,6 +44,7 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/presensi/izin', [PresensiController::class, 'izin'])->name('presensi.izin');
     Route::get('/presensi/buatizin', [PresensiController::class, 'buatizin'])->name('presensi.buatizin');
     Route::post('/presensi/storeizin', [PresensiController::class, 'storeizin'])->name('presensi.storeizin');
+    Route::post('/presensi/cekpengajuanizin', [PresensiController::class, 'cekpengajuanizin'])->name('presensi.cekpengajuanizin');
 });
 
 // ------------ untuk dashboard admin
@@ -86,5 +87,6 @@ Route::middleware(['auth:user'])->group(function () {
     // Konfigurasi
     Route::get('/konfigurasi/lokasikantor', [KonfigurasiController::class, 'lokasikantor'])->name('lokasikantor');
     Route::post('/konfigurasi/lokasikantor/update', [KonfigurasiController::class, 'updatelokasikantor'])->name('lokasikantor.update');
+    Route::get('konfigurasi/jamkerja', [KonfigurasiController::class, 'jamkerja'])->name('jamkerja.index');
 
 });
