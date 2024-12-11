@@ -1,6 +1,24 @@
 @extends('layout.presensi')
+<style>
+    .logout {
+        position: absolute;
+        color: white;
+        font-size: 30px;
+        right: 10px;
+    }
+</style>
 @section('content')
     <div class="section" id="user-section">
+        <a href="" id="logout" class="logout">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                <path d="M9 12h12l-3 -3" />
+                <path d="M18 15l3 -3" />
+            </svg>
+        </a>
         <div id="user-detail">
             <div class="avatar">
 
@@ -8,8 +26,8 @@
                     <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" style="width: 70px; height: 60px;"
                         class="imaged">
                 @else
-                    <img src="{{ Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) }}" alt="avatar"
-                        style="width: 70px; height: 60px;" class="imaged ">
+                    <img src="{{ Storage::url('uploads/karyawan/' . Auth::guard('karyawan')->user()->foto) }}"
+                        alt="avatar" style="width: 70px; height: 60px;" class="imaged ">
                 @endif
             </div>
             <div id="user-info">
@@ -137,7 +155,8 @@
                         <div class="card-body text-center" style="padding: 12px 12px !important;">
                             <span class="badge badge-danger"
                                 style="position: absolute; top: 3px; right: 11px; font-size: 0.5rem; z-index: 9999;">{{ $rekapizin->jmlizin }}</span>
-                            <ion-icon name="newspaper-outline" style="font-size: 1.2rem;" class="text-success"></ion-icon>
+                            <ion-icon name="newspaper-outline" style="font-size: 1.2rem;"
+                                class="text-success"></ion-icon>
                             <br>
                             <span style="font-size: 0.7rem; font-weight: 600;">Izin</span>
                         </div>
@@ -325,3 +344,26 @@
         </div>
     </div>
 @endsection
+
+@push('myscript')
+    <script>
+        $(document).ready(function() {
+            $('#logout').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Logout',
+                    text: "Apakah anda yakin ingin logout?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Logout'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('proseslogout') }}";
+                    }
+                })
+            });
+        });
+    </script>
+@endpush

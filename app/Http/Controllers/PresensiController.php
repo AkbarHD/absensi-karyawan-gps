@@ -57,7 +57,7 @@ class PresensiController extends Controller
         $formatName = $nik . "-" . $tgl_presensi . '-' . $ket;
         // di explode
         $image_parts = explode(";base64,", $image);
-        dd($image_parts);
+        // dd($image_parts);
         // di decode
         $image_base64 = base64_decode($image_parts[1]);
         // file asli foto absensi
