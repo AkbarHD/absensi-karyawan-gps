@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KaryawanController;
@@ -88,5 +89,12 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/konfigurasi/lokasikantor', [KonfigurasiController::class, 'lokasikantor'])->name('lokasikantor');
     Route::post('/konfigurasi/lokasikantor/update', [KonfigurasiController::class, 'updatelokasikantor'])->name('lokasikantor.update');
     Route::get('konfigurasi/jamkerja', [KonfigurasiController::class, 'jamkerja'])->name('jamkerja.index');
+
+    // cabang
+    Route::get('/cabang', [CabangController::class, 'index'])->name('cabang.index');
+    Route::post('/cabang/store', [CabangController::class, 'store'])->name('cabang.store');
+    Route::post('/cabang/edit', [CabangController::class, 'edit'])->name('cabang.edit');
+    Route::put('/cabang/{kode_cabang}/update', [CabangController::class, 'update'])->name('cabang.update');
+    Route::delete('/cabang/{kode_cabang}/delete', [CabangController::class, 'delete'])->name('cabang.delete');
 
 });

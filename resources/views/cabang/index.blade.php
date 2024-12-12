@@ -8,33 +8,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="javascript:void(0);" class="btn btn-primary" id="btnTambahDepartemen">Tambah data</a>
+                            <a href="javascript:void(0);" class="btn btn-primary" id="btnTambahCabang">Tambah data</a>
 
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <form action="{{ route('departemen.index') }}" method="GET">
+                                    <form action="{{ route('cabang.index') }}" method="GET">
                                         <div class="row">
                                             <div class="col-10">
                                                 <div class="form-group">
-                                                    <input type="text" name="nama_dept" id="nama_dept"
-                                                        class="form-control" placeholder="Nama Departemen"
-                                                        value="{{ Request('nama_dept') }}">
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="">Semua Cabang</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                            fill="none" stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" width="24" height="20"
-                                                            stroke-width="2">
-                                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                                                            <path d="M21 21l-6 -6"></path>
-                                                        </svg>
-                                                        Cari
-                                                    </button>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </form>
                                 </div>
@@ -46,19 +33,24 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode departemen</th>
-                                                <th>Nama departemen</th>
+                                                <th>Kode Cabang</th>
+                                                <th>Nama Nama Cabang</th>
+                                                <th>Lokasi</th>
+                                                <th>Radius</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($departemen as $item)
+                                            @forelse ($cabang as $x)
                                                 <tr>
-                                                    <td>{{ $loop->iteration + $departemen->firstItem() - 1 }}</td>
-                                                    <td>{{ $item->kode_dept }}</td>
-                                                    <td>{{ $item->nama_dept }}</td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $x->kode_cabang }}</td>
+                                                    <td>{{ $x->nama_cabang }}</td>
+                                                    <td>{{ $x->lokasi_cabang }}</td>
+                                                    <td>{{ $x->radius_cabang }}</td>
                                                     <td>
                                                         <a href="" class="btn btn-sm btn-primary edit"
-                                                            kode_cabang="{{ $item->kode_dept }}">
+                                                            kode_cabang="{{ $x->kode_cabang }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                                 fill="none" stroke="currentColor" stroke-linecap="round"
                                                                 stroke-linejoin="round" width="20" height="20"
@@ -72,13 +64,12 @@
                                                                 <path d="M16 5l3 3"></path>
                                                             </svg>
                                                         </a>
-                                                        <form class="d-inline delete-form"
-                                                            action="{{ route('departemen.destroy', $item->kode_dept) }}"
-                                                            method="POST">
+                                                        <form action="{{ route('cabang.delete', $x->kode_cabang) }}"
+                                                            method="POST" style="display: inline" class="delete-form">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-danger delete-button">
+                                                            <button class="btn btn-sm btn-danger delete-button"
+                                                                type="submit">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                                     fill="none" stroke="currentColor"
                                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -93,19 +84,18 @@
                                                                     </path>
                                                                 </svg>
                                                             </button>
-
                                                         </form>
-
                                                     </td>
                                                 </tr>
                                             @empty
+                                                <td colspan="6">Data tidak tersedia</td>
                                             @endforelse
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            {{ $departemen->links('vendor.pagination.bootstrap-5') }}
+                            {{-- {{ $departemen->links('vendor.pagination.bootstrap-5') }} --}}
 
                         </div>
                     </div>
@@ -116,15 +106,15 @@
 
 
     {{-- modal tambah karyawan --}}
-    <div class="modal modal-blur fade" id="modal-inputDepartemen" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-inputCabang" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Departemen</h5>
+                    <h5 class="modal-title">Tambah Data Cabang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('departemen.store') }}" method="POST" id="frmKaryawan">
+                    <form action="{{ route('cabang.store') }}" method="POST" id="frmCabang">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -146,8 +136,31 @@
                                             <path d="M19 11l0 2" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="kode_dept" class="form-control" id="kode_dept"
-                                        placeholder="Kode Departemen">
+                                    <input type="text" name="kode_cabang" class="form-control" id="kode_cabang"
+                                        placeholder="Kode Cabang">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-icon mb-3">
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-building-community">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+                                            <path d="M13 7l0 .01" />
+                                            <path d="M17 7l0 .01" />
+                                            <path d="M17 11l0 .01" />
+                                            <path d="M17 15l0 .01" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" name="nama_cabang" id="nama_cabang" class="form-control"
+                                        placeholder="Nama Cabang">
                                 </div>
                             </div>
                         </div>
@@ -160,14 +173,37 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                            <path
+                                                d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="nama_dept" id="nama_dept" class="form-control"
-                                        placeholder="Nama Departement">
+                                    <input type="text" name="lokasi_cabang" id="lokasi_cabang" class="form-control"
+                                        placeholder="Lokasi Cabang">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-icon mb-3">
+                                    <span class="input-icon-addon">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-brand-flightradar24">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                            <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+                                            <path d="M8.5 20l3.5 -8l-6.5 6" />
+                                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                        </svg>
+                                    </span>
+                                    <input type="number" name="radius" id="radius" class="form-control"
+                                        placeholder="Radius">
                                 </div>
                             </div>
                         </div>
@@ -200,11 +236,11 @@
     </div>
 
     {{-- modal edit --}}
-    <div class="modal modal-blur fade" id="modal-editDepartemen" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-editCabang" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Departemen</h5>
+                    <h5 class="modal-title">Edit Cabang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="loadededitform">
@@ -219,23 +255,24 @@
 @push('myscript')
     <script>
         $(document).ready(function() {
-            $('#btnTambahDepartemen').on('click', function() {
-                $('#modal-inputDepartemen').modal('show');
+            $('#btnTambahCabang').on('click', function() {
+                $('#modal-inputCabang').modal('show');
             });
 
             $('.edit').on('click', function(e) {
                 e.preventDefault();
-                var kode = $(this).attr('kode');
+                var kode_cabang = $(this).attr('kode_cabang');
+                // alert(kode_cabang);
                 $.ajax({
-                    type: 'GET',
-                    url: '{{ route('departemen.edit') }}',
+                    type: 'POST',
+                    url: '{{ route('cabang.edit') }}',
                     data: {
                         _token: "{{ csrf_token() }}",
-                        kode: kode
+                        kode_cabang: kode_cabang
                     },
                     success: function(respond) {
                         $('#loadededitform').html(respond);
-                        $('#modal-editDepartemen').modal('show');
+                        $('#modal-editCabang').modal('show');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseJSON.error);
@@ -263,6 +300,42 @@
                         form.submit();
                     }
                 })
+            });
+
+            $('#frmCabang').on('submit', function() {
+                var kode_cabang = $('#kode_cabang').val();
+                var nama_cabang = $('#nama_cabang').val();
+                var lokasi_cabang = $('#lokasi_cabang').val();
+                var radius_cabang = $('#radius').val();
+                if (kode_cabang == "") {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'kode cabang Tidak Boleh Kosong',
+                        icon: 'warning',
+                    });
+                    return false;
+                } else if (nama_cabang == "") {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Nama cabang tidak boleh kosong',
+                        icon: 'warning'
+                    });
+                    return false;
+                } else if (lokasi_cabang == "") {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Lokasi cabang tidak boleh kosong',
+                        icon: 'warning'
+                    });
+                    return false;
+                } else if (radius_cabang == "") {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Radius cabang tidak boleh kosong',
+                        icon: 'warning'
+                    });
+                    return false
+                }
             });
 
             @if (Session::has('success'))

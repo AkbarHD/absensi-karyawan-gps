@@ -53,7 +53,7 @@
                         <span class="nav-link-title">Master Data</span>
                     </a>
                     <div
-                        class="dropdown-menu {{ request()->routeIs('karyawan.index', 'departemen.index') ? 'show' : '' }}">
+                        class="dropdown-menu {{ request()->routeIs('karyawan.index', 'departemen.index', 'cabang.index') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}"
@@ -63,6 +63,10 @@
                                 <a class="dropdown-item {{ request()->routeIs('departemen.index') ? 'active' : '' }}"
                                     href="{{ route('departemen.index') }}">
                                     Data Departemen
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('cabang.index') ? 'active' : '' }}"
+                                    href="{{ route('cabang.index') }}">
+                                    Kantor Cabang
                                 </a>
                             </div>
                         </div>
